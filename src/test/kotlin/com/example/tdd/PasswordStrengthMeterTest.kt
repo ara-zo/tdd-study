@@ -63,8 +63,23 @@ class PasswordStrengthMeterTest {
     @Test
     @DisplayName("길이가 8글자 이상인 조건만 충족하는 경우")
     fun meetsOnlyLengthCriteria_Then_Weak() {
-        assertStrength("abdefghi", PasswordStrength.WEAK)
+        assertStrength("abdefghi", PasswordStrength.NORMAL)
     }
+
+    @Test
+    @DisplayName("숫자 포함 조건만 충족하는 경우")
+    fun meetsOnlyNumCriteria_Then_Week() {
+        assertStrength("12345", PasswordStrength.WEAK)
+    }
+
+    @Test
+    @DisplayName("대문자 포함 조건만 충족하는 경우")
+    fun meetsOnlyUpperCriteria_Then_Weak() {
+        assertStrength("ABZEF", PasswordStrength.WEAK)
+    }
+
+
+
 
     private fun assertStrength(password: String?, strength: PasswordStrength) {
         assertEquals(strength, PasswordStrengthMeter.meter(password))

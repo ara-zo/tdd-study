@@ -7,15 +7,15 @@ object PasswordStrengthMeter {
         if(s.isNullOrEmpty()) return PasswordStrength.INVALID
 
         val lengthEnough: Boolean = s.length >= 8
-        if(!lengthEnough) return PasswordStrength.NORMAL
-
-        if (s.length < 8) {
-          return PasswordStrength.NORMAL
-        }
 
         val containsNum = meetsContainingNumberCriteria(s)
         val containsUpp = meetsContainingUppercaseCriteria(s)
 
+        if(!lengthEnough && !containsNum && !containsUpp) return PasswordStrength.WEAK
+        if(!lengthEnough && containsNum && !containsUpp) return PasswordStrength.WEAK
+        if(!lengthEnough && !containsNum && containsUpp) return PasswordStrength.WEAK
+
+        if(!lengthEnough) return PasswordStrength.NORMAL
         if(!containsNum) return PasswordStrength.NORMAL
         if(!containsUpp) return PasswordStrength.NORMAL
 
