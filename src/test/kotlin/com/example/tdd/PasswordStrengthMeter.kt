@@ -5,19 +5,13 @@ object PasswordStrengthMeter {
     fun meter(s:String?): PasswordStrength {
 
         if(s.isNullOrEmpty()) return PasswordStrength.INVALID
+        var metCounts: Int = 0
+        if(s.length >= 8) metCounts++
+        if(meetsContainingNumberCriteria(s)) metCounts++
+        if(meetsContainingUppercaseCriteria(s)) metCounts++
 
-        val lengthEnough: Boolean = s.length >= 8
-
-        val containsNum = meetsContainingNumberCriteria(s)
-        val containsUpp = meetsContainingUppercaseCriteria(s)
-
-        if(!lengthEnough && !containsNum && !containsUpp) return PasswordStrength.WEAK
-        if(!lengthEnough && containsNum && !containsUpp) return PasswordStrength.WEAK
-        if(!lengthEnough && !containsNum && containsUpp) return PasswordStrength.WEAK
-
-        if(!lengthEnough) return PasswordStrength.NORMAL
-        if(!containsNum) return PasswordStrength.NORMAL
-        if(!containsUpp) return PasswordStrength.NORMAL
+        if(metCounts == 1) return  PasswordStrength.WEAK
+        if(metCounts == 2) return  PasswordStrength.NORMAL
 
         return PasswordStrength.STRONG
     }
