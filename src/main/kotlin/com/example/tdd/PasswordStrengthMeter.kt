@@ -5,8 +5,7 @@ object PasswordStrengthMeter {
     fun meter(s:String?): PasswordStrength {
 
         if(s.isNullOrEmpty()) return PasswordStrength.INVALID
-        var metCounts = getMetCriteriaCounts(s)
-
+        val metCounts = getMetCriteriaCounts(s)
         if(metCounts <= 1) return  PasswordStrength.WEAK
         if(metCounts == 2) return  PasswordStrength.NORMAL
 
