@@ -84,8 +84,6 @@ class PasswordStrengthMeterTest {
         assertStrength("abc", PasswordStrength.WEAK)
     }
 
-
-
     private fun assertStrength(password: String?, strength: PasswordStrength) {
         assertEquals(strength, PasswordStrengthMeter.meter(password))
     }
