@@ -19,7 +19,7 @@ class ExpiryDateCalculatorTest {
      * 2. 예외 상황을 먼저 테스트
      */
     @Test
-    fun `만원_납부하면_한달_뒤가_만료일이_됨`() {
+    fun `만원_납부하면_한달_뒤가_만료일이_됨`( ) {
         val billingDate: LocalDate = LocalDate.of(2019, 3, 1)
         val payAmount = 10_000
 
