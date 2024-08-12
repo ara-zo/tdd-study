@@ -1,12 +1,14 @@
 package com.example.tdd
 
+import org.springframework.stereotype.Service
 import java.time.LocalDate
 import kotlin.test.Test
 
-object ExpiryDateCalculator {
+@Service
+class ExpiryDateCalculator {
 
-    fun calculateExpiryDate(billingDate: LocalDate, payAmount: Int): LocalDate {
-        return billingDate.plusMonths(1)
+    fun calculateExpiryDate(payData: PayData): LocalDate {
+        return payData.billingDate.plusMonths(1)
     }
 
 }

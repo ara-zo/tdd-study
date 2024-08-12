@@ -1,9 +1,11 @@
 package com.example.tdd
 
+import org.springframework.boot.test.context.SpringBootTest
 import java.time.LocalDate
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
+@SpringBootTest
 class ExpiryDateCalculatorTest {
 
     /**
@@ -21,14 +23,18 @@ class ExpiryDateCalculatorTest {
     @Test
     fun `만원_납부하면_한달_뒤가_만료일이_됨`( ) {
         assertExpiryDate(
-            billingDate = LocalDate.of(2019, 3, 1),
-            payAmount = 10_000,
+            PayData(
+                billingDate = LocalDate.of(2019, 3, 1),
+                payAmount = 10_000,
+            ),
             expectedExpiryDate = LocalDate.of(2019, 4, 1)
         )
 
         assertExpiryDate(
-            billingDate = LocalDate.of(2019, 5, 5),
-            payAmount = 10_000,
+            PayData(
+                billingDate = LocalDate.of(2019, 5, 5),
+                payAmount = 10_000,
+            ),
             expectedExpiryDate = LocalDate.of(2019,6,5)
         )
     }
@@ -36,30 +42,36 @@ class ExpiryDateCalculatorTest {
     @Test
     fun `납부일과_한달_뒤_일자가_같지_않음`() {
         assertExpiryDate(
-            billingDate = LocalDate.of(2019,1,31),
-            payAmount = 10_000,
+            PayData(
+                billingDate = LocalDate.of(2019,1,31),
+                payAmount = 10_000,
+            ),
             expectedExpiryDate = LocalDate.of(2019,2,28)
         )
 
         assertExpiryDate(
-            billingDate = LocalDate.of(2019,5,31),
-            payAmount = 10_000,
+            PayData(
+                billingDate = LocalDate.of(2019,5,31),
+                payAmount = 10_000,
+            ),
             expectedExpiryDate = LocalDate.of(2019,6,30)
         )
 
         assertExpiryDate(
-            billingDate = LocalDate.of(2020,1,31),
-            payAmount = 10_000,
+            PayData(
+                billingDate = LocalDate.of(2020,1,31),
+                payAmount = 10_000,
+            ),
             expectedExpiryDate = LocalDate.of(2020,2,29)
         )
     }
 
     private fun assertExpiryDate(
-        billingDate: LocalDate,
-        payAmount: Int,
+        payData: PayData,
         expectedExpiryDate: LocalDate
     ) {
-        val expiryDate = ExpiryDateCalculator.calculateExpiryDate(billingDate, payAmount)
+        val cal = ExpiryDateCalculator()
+        val expiryDate = cal.calculateExpiryDate(payData)
         assertEquals(expectedExpiryDate, expiryDate)
     }
 }
