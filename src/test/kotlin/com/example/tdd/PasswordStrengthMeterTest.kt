@@ -22,10 +22,20 @@ class PasswordStrengthMeterTest {
      * @DisplayName : 테스트 메서드를 원하는 이름으로 표시 가능
      */
 
+    // 데이터 선언?
+
+    // 암호 검사 함수 () {
+    // }
+
+
     @Test
-    @DisplayName("모든 규칙을 충족하는 경우")
-    fun meetsAllCriteria_Then_Strong() {
-        assertStrength("ab12!@AB", PasswordStrength.STRONG)
+    fun `모든 규칙을 충족하는 경우`() {
+        // Given
+        val password = "ab12!@AB"
+
+        // when & then
+        assertStrength(password, PasswordStrength.STRONG)
+
         assertStrength("abc1!Add", PasswordStrength.STRONG)
     }
 
