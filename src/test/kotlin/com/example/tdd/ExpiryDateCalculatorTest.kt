@@ -117,6 +117,19 @@ class ExpiryDateCalculatorTest {
         )
     }
 
+    // 첫 납부일이 2019-01-31이고 만료되는 2019-02-28에 2만원을 납부하면 다음 만료일은 2019-04-30
+    @Test
+    fun `첫_납부일과_만료일_일자가_다를때_이만원_이상_납부`() {
+        assertExpiryDate(
+            payData = PayData(
+                firstBillingDate = LocalDate.of(2019,1,31),
+                billingDate = LocalDate.of(2019,2,28),
+                payAmount = 20_000,
+            ),
+            expectedExpiryDate = LocalDate.of(2019,4,30)
+        )
+    }
+
     private fun assertExpiryDate(
         payData: PayData,
         expectedExpiryDate: LocalDate
