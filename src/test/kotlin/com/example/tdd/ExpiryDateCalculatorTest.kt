@@ -98,6 +98,25 @@ class ExpiryDateCalculatorTest {
         )
     }
 
+    @Test
+    fun `이만원_이상_납부하면_비례해서_만료일_계산`() {
+        assertExpiryDate(
+            payData = PayData(
+                billingDate = LocalDate.of(2019,3,1),
+                payAmount = 20_000,
+            ),
+            expectedExpiryDate = LocalDate.of(2019,5,1)
+        )
+
+        assertExpiryDate(
+            payData = PayData(
+                billingDate = LocalDate.of(2019,3,1),
+                payAmount = 30_000
+            ),
+            expectedExpiryDate = LocalDate.of(2019,6,1)
+        )
+    }
+
     private fun assertExpiryDate(
         payData: PayData,
         expectedExpiryDate: LocalDate
