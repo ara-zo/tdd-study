@@ -129,6 +129,15 @@ Assertions 클래스는 arssertEquals 를 포함해 단언 메서드를 제공
 - assertThrows : 지정한 타입의 익셉션이 발생하는지 검사
 - assertDoesNotThrow : 실행한 결과로 익셉션이 발생하지 않는지 검사
 
+### #04. 테스트 라이프사이클
+#### @BeforeEach 어노테이션과 @AfterEach 어노테이션
+JUnit은 해당 애노테이션이 존재하면 다음과 같이 코드를 실행한다.
 
+- 테스트 메서드를 포함한 객체 생성
+- (존재하면) @BeforeEach 애노테이션이 붙은 메서드 실행
+- @Test 애노테이션이 붙은 메서드 실행
+- (존재하면) @AfterEach 애노테이션이 붙은 메서드 실행
 
+#### @BeforeAll 어노테이션과 @AfterAll 어노테이션
+모든 메서드마다 시작과 끝에서 실행되던 Each 어노테이션과는 다르게, 전체적인 동작의 시작과 끝에서 단 한번만 수행
 
