@@ -4,12 +4,10 @@ import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import org.springframework.boot.test.context.SpringBootTest
 import java.time.LocalDate
-import kotlin.IllegalArgumentException
 import kotlin.test.*
-import kotlin.IllegalArgumentException as IllegalArgumentException1
 
 @SpringBootTest
-class methodTest {
+class MethodTest {
 
     @Test
     fun `두_객체가_같은지_비교`() {
