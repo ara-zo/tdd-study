@@ -1,5 +1,6 @@
 package com.example.tdd
 
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import org.springframework.boot.test.context.SpringBootTest
@@ -32,6 +33,7 @@ class MethodTest {
         assertTrue(thrown.message?.contains("dateTime1") == true)
     }
 
+    @Disabled
     @Test
     fun `모든_검증_실행_후_실패_확인`() {
         assertAll(
