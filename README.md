@@ -107,15 +107,16 @@ JUnit 코드의 기본 구조는 간단.
 테스트로 사용할 클래스를 만들고 @Test 어노테이션을 메서드에 붙이기만 하면 됨
 
 private 또는 static으로 설정 X, 그리고 반드시 리턴 타입이 void로 되어야 함.
-
->@SpringBootTest
-    class SumTest {
+```
+@SpringBootTest
+class SumTest {
     @Test
     fun sum() {
         val result = 2 + 3;
         assertEquals(5, result);
     }
 }
+```
 
 ### #03. 주요 단언 메서드
 Assertions 클래스는 arssertEquals 를 포함해 단언 메서드를 제공
@@ -169,3 +170,40 @@ JUnit은 해당 애노테이션이 존재하면 다음과 같이 코드를 실�
 - 데이터를 읽을 파일이 없다면 인자가 잘못되었다는 익셉션을 발생한다.
 - 문제 상황을 알려줄 수 있는 값을 리턴해야 한다.
 - 숫자가 아닌 잘못된 데이터가 존재하는 경우에도 알맞은 결과를 생성해야 한다.
+
+### #02. 테스트 코드의 구성 요소 : 상황, 실행, 결과 확인
+테스트 코드는 기능을 실행하고 그 결과를 확인하므로 상황, 실행, 결과 확인의 세가지 요소로 테스트 구성할 수 있다.
+
+상황, 실행, 결과 확인은 영어 표현 given, when, then에 대응한다.
+하지만 이 기본 골격은 메 테스트 경우마다 존재하는 것은 아니다.
+```
+@Test
+fun `모든 규칙을 충족하는 경우`() {
+assertStrength("ab12!@AB", PasswordStrength.STRONG)
+assertStrength("abc1!Add", PasswordStrength.STRONG)
+}
+```
+암호 강도 측정의 경우 결과에 영향을 주는 상화아이 존재하지 않으므로 테스트는 다음처럼 기능을 실행하고 
+결과를 확인하는 코드만 포함하고 있다.
+
+결과값이 항상 존재하는 것은 아니다
+```
+@Test
+fun `테스트_실패_알림`() {
+    val thrown = assertThrows<IllegalArgumentException> {
+        val dateTime1 = LocalDate.now()
+        val dateTime2 = dateTime1.minusDays(1) // 날짜를 다르게 설정하여 테스트
+
+        // 이부분 안넣으면 AssertionFailedError가 뜸
+        if (dateTime1 != dateTime2) {
+            throw IllegalArgumentException("dateTime1 and dateTime2 are not equal")
+        }
+
+        assertEquals(dateTime1, dateTime2)
+    }
+    assertTrue(thrown.message?.contains("dateTime1") == true)
+}
+```
+실행 결과로 익셉션을 발생하는 것이 정상인 경우도 있다.
+
+상황-실행-결과 확인 구조에 너무 집착하지 말자!
