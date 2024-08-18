@@ -207,3 +207,91 @@ fun `테스트_실패_알림`() {
 실행 결과로 익셉션을 발생하는 것이 정상인 경우도 있다.
 
 상황-실행-결과 확인 구조에 너무 집착하지 말자!
+
+###  #03. 외부상황과 외부 결과
+
+상황 설정이 테스트 대상으로 국한된 것은 아니다.
+ 
+상황에는 외부 요인도 있다.
+
+```
+val dataFile = File("data.txt")
+val sum = MathUtils.sum(dataFile)
+```
+
+MathUtils.sum() 메서드를 테스트하려면 존재하지 않는 상황에서의 결과도 확인해야 한다.
+
+가장 쉬운 방법으로 존재하지 않는 파일을 경로로 사용하는 것이다.
+
+하지만 우연이라도 해당 파일이 존재 할 수 있다. 테스트는 실행할 때마다 동일 결과를 보장해야 한다.
+
+더욱 확실한 방법은 명시적으로 파일을 없는 상황을 만드는 것이다.
+
+```
+@Test
+@DisplayName("파일이 없을때")
+fun noDataFile_Then_Exception() {
+    givenNoFile("badpath.txt")
+
+    val dataFile = File("badpath.txt")
+    assertThrows<IllegalArgumentException> {
+        MathUtils.sum(dataFile)
+    }
+}
+
+private fun givenNoFile(path: String) {
+    val file = File(path)
+    if(file.exists()) {
+        val deleted = file.delete()
+        if(!deleted) throw RuntimeException("fail givenNoFile" + path)
+    }
+}
+```
+
+이렇게 구성하면 테스트가 항상 올바른 상황에서 동작한다는 것을 보장할 수 있다.
+
+다음으로 존재하는 상황을 만드는 가장 쉬운 방법은 상황에 맞는 파일을 미리 만들어 두는 것이다.
+
+이 경우 파일이 항상 테스트 코드와 같이 제공될 수 있어야 한다.
+
+```
+@Test
+@DisplayName("파일이 있을때")
+fun dataFileSumeTest() {
+    val dataFile = File("src/test/resources/datafile.txt")
+    val sum = MathUtils.sum(dataFile)
+    assertEquals(10L, sum)
+}
+```
+
+파일을 미리 만들지 않고 테스트 코드에서 상황에 맞는 파일을 생성하는 방법도 있다.
+
+```
+@Test
+@DisplayName("파일이 있을때")
+fun dataFileSumeTest() {
+    givenDataFile("src/test/resources/datafile.txt", "1", "2", "3", "4")
+
+    val dataFile = File("src/test/resources/datafile.txt")
+    val sum = MathUtils.sum(dataFile)
+    assertEquals(10L, sum)
+}
+
+private fun givenDataFile(path: String, vararg lines: String) {
+    try {
+        val dataPath = Path(path)
+        if(Files.exists(dataPath)) {
+            Files.delete(dataPath)
+        }
+        Files.write(dataPath, lines.toList())
+    } catch(e: IOException) {
+        throw RuntimeException(e)
+    }
+}
+```
+
+이 방법의 장점은 테스트 코드 내에 필요한 것이 다 있다는 것이다.
+
+테스트 대상이 아닌 외부에서 결과를 확인해야 할 때도 있다.
+
+처리 결과를 지정한 경로의 파일에 저장하는 기능을 생각해보면, 해당 경로에 파일이 원하는 내용으로 만들어졌는지 확인해야 한다.
