@@ -126,6 +126,8 @@ Assertions 클래스는 arssertEquals 를 포함해 단언 메서드를 제공
 - assertNull : 값이 null인지 검사
 - assertNotNull : 값이 null이 아닌지 검사
 - fail : 테스트를 실패 처리
+- assertThrows : 지정한 타입의 익셉션이 발생하는지 검사
+- assertDoesNotThrow : 실행한 결과로 익셉션이 발생하지 않는지 검사
 
 
 
