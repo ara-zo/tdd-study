@@ -1,5 +1,6 @@
 package com.example.tdd
 
+import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import org.springframework.boot.test.context.SpringBootTest
 import java.time.LocalDate
@@ -31,5 +32,13 @@ class methodTest {
             assertEquals(dateTime1, dateTime2)
         }
         assertTrue(thrown.message?.contains("dateTime1") == true)
+    }
+
+    @Test
+    fun `모든_검증_실행_후_실패_확인`() {
+        // 검증 실패로 에러 발생
+        assertEquals(3, 5/2)
+        // 이 코드는 실행되지 않음
+        assertEquals(4, 2*2)
     }
 }
