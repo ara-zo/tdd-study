@@ -1,10 +1,11 @@
 package com.example.tdd
 
+import org.junit.jupiter.api.assertThrows
 import org.springframework.boot.test.context.SpringBootTest
 import java.time.LocalDate
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.fail
+import kotlin.IllegalArgumentException
+import kotlin.test.*
+import kotlin.IllegalArgumentException as IllegalArgumentException1
 
 @SpringBootTest
 class methodTest {
@@ -18,13 +19,16 @@ class methodTest {
 
     @Test
     fun `테스트 실패 알림`() {
-        try {
+        val thrown = assertThrows<IllegalArgumentException> {
             val dateTime1 = LocalDate.now()
-            val dateTime2 = LocalDate.now()
-            assertEquals(dateTime1, dateTime2)
-            fail() // 이 지점에 다다르면 fail() 메서드는 테스트 실패 에러를 발생
-        } catch (e: IllegalArgumentException) {
+            val dateTime2 = dateTime1.minusDays(1) // 날짜를 다르게 설정하여 테스트
 
+            if (dateTime1 != dateTime2) {
+                throw IllegalArgumentException("dateTime1 and dateTime2 are not equal")
+            }
+
+            assertEquals(dateTime1, dateTime2)
         }
+        assertTrue(thrown.message?.contains("dateTime1") == true)
     }
 }
