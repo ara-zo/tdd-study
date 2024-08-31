@@ -1,4 +1,4 @@
-package com.example.tdd
+package com.example.tdd.chapter6
 
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
