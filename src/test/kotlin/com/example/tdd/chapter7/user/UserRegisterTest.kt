@@ -5,15 +5,17 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class UserRegisterTest {
     private lateinit var userRegister: UserRegister
     private val stubPasswordChecker = StubWeakPasswordChecker(false)
     private val fakeRepository = MemoryUserRepository()
+    private val spyEmailNotifier = SpyEmailNotifier(false, null)
 
     @BeforeEach
     fun setUp() {
-        userRegister = UserRegister(stubPasswordChecker, fakeRepository)
+        userRegister = UserRegister(stubPasswordChecker, fakeRepository, spyEmailNotifier)
     }
 
     @Test
@@ -34,5 +36,14 @@ class UserRegisterTest {
         val savedUser = fakeRepository.findById("id")
         assertEquals("id", savedUser?.id)
         assertEquals("email", savedUser?.email)
+    }
+
+    @Test
+    @DisplayName("가입하면 메일 전송")
+    fun whenRegisterThenSendMail() {
+        userRegister.register("id", "pw", "email@email.com")
+
+        assertTrue(spyEmailNotifier.called)
+        assertEquals("email@email.com", spyEmailNotifier.email)
     }
 }
