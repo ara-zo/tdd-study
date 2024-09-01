@@ -9,10 +9,9 @@ import org.junit.jupiter.api.BeforeEach
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
+class CardNumberValidatorTest {
+    private lateinit var wireMockServer: WireMockServer
 
-class CardNumberValidatorTest(
-    private var wireMockServer: WireMockServer
-) {
     @BeforeEach
     fun setUp() {
         wireMockServer = WireMockServer(8089)
