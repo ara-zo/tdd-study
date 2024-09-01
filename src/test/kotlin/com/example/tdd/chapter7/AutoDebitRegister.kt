@@ -8,7 +8,7 @@ class AutoDebitRegister(
 ) {
     fun register(req: AutoDebitReq): RegisterResult {
         val validity = validator.validate(req.cardNumber)
-        if (validity != CardValidity.VALID) {
+        if (validity != Cardvalidity.VALID) {
             return RegisterResult.error(validity)
         }
         val info: AutoDebitInfo? = repository.findOne(req.userId)
