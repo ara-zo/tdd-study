@@ -1,4 +1,4 @@
-package com.example.tdd.chapter7
+package com.example.tdd.chapter7.autodebit
 
 import java.time.LocalDateTime
 

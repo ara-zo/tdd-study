@@ -1,6 +1,6 @@
-package com.example.tdd.chapter7
+package com.example.tdd.chapter7.autodebit
 
-class JpaAutoDebitInfoRepository : AutoDebitInfoRepository {
+class StubAutoDebitInfoRepository : AutoDebitInfoRepository {
     override fun save(info: AutoDebitInfo) {
 
     }
