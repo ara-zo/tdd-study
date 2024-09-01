@@ -7,11 +7,14 @@ import java.net.http.HttpRequest
 import java.net.http.HttpRequest.BodyPublishers
 import java.net.http.HttpResponse
 
-open class CardNumberValidator {
+open class CardNumberValidator(
+    private var server: String? = null
+) {
+
     open fun validate(cardNumber: String): Cardvalidity {
         val httpClient = HttpClient.newHttpClient()
         val request = HttpRequest.newBuilder()
-            .uri(URI.create("https://some-external-pg.com/card"))
+            .uri(URI.create(server + "/card"))
             .header("Content-Type", "text/plain")
             .POST(BodyPublishers.ofString(cardNumber))
             .build()
