@@ -1,4 +1,4 @@
-package com.example.tdd
+package com.example.tdd.chapter2
 
 object PasswordStrengthMeter {
 
@@ -6,8 +6,8 @@ object PasswordStrengthMeter {
 
         if(s.isNullOrEmpty()) return PasswordStrength.INVALID
         val metCounts = getMetCriteriaCounts(s)
-        if(metCounts <= 1) return  PasswordStrength.WEAK
-        if(metCounts == 2) return  PasswordStrength.NORMAL
+        if(metCounts <= 1) return PasswordStrength.WEAK
+        if(metCounts == 2) return PasswordStrength.NORMAL
 
         return PasswordStrength.STRONG
     }

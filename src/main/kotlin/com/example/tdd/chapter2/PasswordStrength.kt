@@ -1,4 +1,4 @@
-package com.example.tdd
+package com.example.tdd.chapter2
 
 enum class PasswordStrength {
     STRONG,

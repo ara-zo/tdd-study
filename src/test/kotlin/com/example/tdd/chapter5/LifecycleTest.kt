@@ -1,10 +1,8 @@
-package com.example.tdd
+package com.example.tdd.chapter5
 
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.boot.test.context.SpringBootTest
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 @SpringBootTest

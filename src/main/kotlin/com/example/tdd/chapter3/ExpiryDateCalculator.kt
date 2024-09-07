@@ -1,4 +1,4 @@
-package com.example.tdd
+package com.example.tdd.chapter3
 
 import org.springframework.stereotype.Service
 import java.time.LocalDate
