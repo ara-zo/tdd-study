@@ -7,5 +7,6 @@ enum class Cardvalidity {
     EXPIRED,
     THEFT,
     UNKNOWN,
+    TIMEOUT,
 
 }
